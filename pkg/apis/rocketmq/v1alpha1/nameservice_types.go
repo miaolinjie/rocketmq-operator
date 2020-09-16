@@ -49,6 +49,8 @@ type NameServiceSpec struct {
 	HostPath string `json:"hostPath"`
 	// VolumeClaimTemplates defines the StorageClass
 	VolumeClaimTemplates []corev1.PersistentVolumeClaim `json:"volumeClaimTemplates"`
+	// The rocketmq exporter
+	Exporter RocketmqExporter `json:"exporter,omitempty"`
 }
 
 // NameServiceStatus defines the observed state of NameService
