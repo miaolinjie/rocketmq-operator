@@ -53,6 +53,16 @@ type NameServiceSpec struct {
 	Exporter RocketmqExporter `json:"exporter,omitempty"`
 }
 
+// RocketmqExporter defines the specification for the rocketmq exporter
+type RocketmqExporter struct {
+	Enabled bool `json:"enabled,omitempty"`
+	Image string `json:"image,omitempty"`
+	ImagePullPolicy corev1.PullPolicy `json:"imagePullPolicy,omitempty"`
+	Env []corev1.EnvVar `json:"env"`
+	Resources corev1.ResourceRequirements `json:"resources,omitempty"`
+	Annotations map[string]string `json:"annotations,omitempty"`
+}
+
 // NameServiceStatus defines the observed state of NameService
 // +k8s:openapi-gen=true
 type NameServiceStatus struct {

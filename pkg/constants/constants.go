@@ -145,7 +145,7 @@ const (
 	// ExporterContainerName 【请翻译】
 	ExporterContainerName = "rocketmq-exporter"
 	ExporterDefaultRequestCPU     = "25m"
-	ExporterDefaultLimitCPU       = "50m"
-	ExporterDefaultRequestMemory  = "50Mi"
-	ExporterDefaultLimitMemory    = "100Mi"
+	ExporterDefaultLimitCPU       = "200m"
+	ExporterDefaultRequestMemory  = "200Mi"
+	ExporterDefaultLimitMemory    = "300Mi"
 )

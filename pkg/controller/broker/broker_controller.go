@@ -20,7 +20,6 @@ package broker
 
 import (
 	"context"
-	"k8s.io/apimachinery/pkg/api/resource"
 	"reflect"
 	"strconv"
 	"strings"
@@ -106,29 +105,6 @@ type ReconcileBroker struct {
 }
 
 //
-func (r *ReconcileBroker) createRocketMQExporterContainer(broker *rocketmqv1alpha1.Broker) (container corev1.Container) {
-	container = corev1.Container{
-		Name: cons.ExporterContainerName,
-		Image: broker.Spec.Exporter.Image,
-		ImagePullPolicy: func(specPolicy corev1.PullPolicy) corev1.PullPolicy {
-			if specPolicy == "" {
-				return corev1.PullAlways
-			}
-			return specPolicy
-		}(broker.Spec.Exporter.ImagePullPolicy),
-		Resources: corev1.ResourceRequirements{
-			Limits:   corev1.ResourceList{
-				corev1.ResourceCPU: resource.MustParse(cons.ExporterDefaultLimitCPU),
-				corev1.ResourceMemory: resource.MustParse(cons.ExporterDefaultLimitMemory),
-			},
-			Requests: corev1.ResourceList{
-				corev1.ResourceCPU: resource.MustParse(cons.ExporterDefaultRequestCPU),
-				corev1.ResourceMemory: resource.MustParse(cons.ExporterDefaultRequestMemory),
-			},
-		},
-	}
-	return
-}
 
 // Reconcile reads that state of the cluster for a Broker object and makes changes based on the state read
 // and what is in the Broker.Spec
@@ -472,10 +448,10 @@ func (r *ReconcileBroker) getBrokerStatefulSet(broker *rocketmqv1alpha1.Broker, 
 			VolumeClaimTemplates: getVolumeClaimTemplates(broker),
 		},
 	}
-	if broker.Spec.Exporter.Enabled {
-		exporter := r.createRocketMQExporterContainer(broker)
-		dep.Spec.Template.Spec.Containers = append(dep.Spec.Template.Spec.Containers, exporter)
-	}
+	//if broker.Spec.Exporter.Enabled {
+	//	exporter := r.createRocketMQExporterContainer(broker, brokerGroupIndex, replicaIndex)
+	//	dep.Spec.Template.Spec.Containers = append(dep.Spec.Template.Spec.Containers, exporter)
+	//}
 	// Set Broker instance as the owner and controller
 	controllerutil.SetControllerReference(broker, dep, r.scheme)
 
